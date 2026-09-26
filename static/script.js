@@ -1,32 +1,43 @@
-let cart = [];
+let cartCount = 0;
 
-function addToCart(productId) {
-    cart.push(productId);
-    document.getElementById('cartCount').innerText = cart.length;
-    document.getElementById('topCount').innerText = cart.length;
-    alert('Product added to cart!');
+function addToCart(productName) {
+    cartCount++;
+    document.getElementById('cart-count').innerText = cartCount;
+    alert(productName + ' cart me add ho gaya hai!');
 }
 
-function buyNow(productId) {
-    let phone = "917887889634";
-    let message = "Hello, I want to order product ID: " + productId;
-    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(message), "_blank");
+function buyNow(name, price) {
+    document.getElementById('prodName').value = name;
+    document.getElementById('prodPrice').value = price;
+    document.getElementById('checkoutModal').style.display = 'block';
+}
+
+function closeCheckout() {
+    document.getElementById('checkoutModal').style.display = 'none';
+}
+
+function submitOrder(event) {
+    event.preventDefault();
+    
+    let product = document.getElementById('prodName').value;
+    let price = document.getElementById('prodPrice').value;
+    let name = document.getElementById('custName').value;
+    let mobile = document.getElementById('custMobile').value;
+    let address = document.getElementById('custAddress').value;
+    let payment = document.getElementById('payMethod').value;
+
+    let message = `*NEW ORDER - ROYAL.SHOPING*%0A%0A` +
+                  `📦 *Product:* \({product} (₹\){price})%0A` +
+                  `👤 *Name:* ${name}%0A` +
+                  `📞 *Mobile:* ${mobile}%0A` +
+                  `📍 *Address:* ${address}%0A` +
+                  `💳 *Payment:* ${payment}`;
+
+    let ownerWhatsApp = "919888888888"; 
+    let whatsappUrl = `https://wa.me/\({ownerWhatsApp}?text=\){message}`;
+    window.open(whatsappUrl, '_blank');
 }
 
 function openCart() {
-    document.getElementById('cartModal').style.display = 'flex';
-}
-
-function closeCart() {
-    document.getElementById('cartModal').style.display = 'none';
-}
-
-function checkout() {
-    if(cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-    }
-    let phone = "917887889634";
-    let message = "Hello, I want to checkout with items: " + cart.join(', ');
-    window.open("https://wa.me/" + phone + "?text=" + encodeURIComponent(message), "_blank");
+    alert('Aapke cart me ' + cartCount + ' items hain.');
 }
