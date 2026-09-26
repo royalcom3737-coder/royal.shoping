@@ -1,153 +1,157 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ROYAL.SHOPING | Premium Watches & Perfumes</title>
-<meta name="description" content="Shop premium watches and perfumes online at MOHSIN. Stylish watches and fragrances with Cash on Delivery.">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://YOUR-DOMAIN.com/">
-<meta property="og:title" content="ROYAL.SHOPING">
-<meta property="og:description" content="Premium watches and perfumes online.">
-<meta property="og:type" content="website">
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-
-<div class="topbar">
-  <span>🚚 Free Shipping All Over India</span>
-  <span>💳 Cash On Delivery Available</span>
-  <span>🛡️ 100% Original Products</span>
-  <span>🛒 Cart (<b id="topCount">0</b>)</span>
-</div>
-
-<header>
-  <a class="brand" href="#home"><span>♛</span> ROYAL.SHOPING <small>WATCHES & PERFUMES</small></a>
-  <nav>
-    <a class="active" href="#home">Home</a>
-    <a href="#watches">Watches</a>
-    <a href="#perfumes">Perfumes</a>
-    <a href="#about">About Us</a>
-    <a href="#contact">Contact</a>
-  </nav>
-  <button class="cart-open" onclick="openCart()">Cart <b id="cartCount">0</b></button>
-</header>
-
-<section id="home" class="hero">
-  <div class="hero-half perfume-hero">
-    <div class="hero-copy">
-      <label>PREMIUM FRAGRANCE</label>
-      <h1>BEARDO<br><strong>PERFUME</strong></h1>
-      <p>Bold fragrance for a stronger you.</p>
-      <div class="offer">₹1,999/-</div>
-      <div class="old">₹3,499/-</div>
-      <button class="buy" onclick="buyNow(1)">🛒 BUY NOW →</button>
-    </div>
-    <img src="{{ url_for('static', filename='perfume.webp') }}" alt="Beardo perfume collection">
-  </div>
-  <div class="hero-half watch-hero">
-    <div class="hero-copy">
-      <label>LUXURY COLLECTION</label>
-      <h1>PREMIUM<br><strong>WATCH</strong></h1>
-      <p>Timeless style for every moment.</p>
-      <div class="offer">₹999/-</div>
-      <div class="old">₹2,499/-</div>
-      <button class="buy" onclick="buyNow(2)">🛒 BUY NOW →</button>
-    </div>
-    <img src="{{ url_for('static', filename='watch.webp') }}" alt="Premium gold watch">
-  </div>
-</section>
-
-<div class="benefits">
-  <div>🚚 <b>Free Shipping</b><small>All Over India</small></div>
-  <div>🛡️ <b>100% Original</b><small>Products</small></div>
-  <div>💵 <b>Cash On Delivery</b><small>Available</small></div>
-  <div>🎧 <b>Customer Support</b><small>24/7 Support</small></div>
-  <div>🔒 <b>Secure Payments</b><small>UPI / Card / Net Banking</small></div>
-</div>
-
-<section class="categories">
-  <a href="#watches" class="category watch-cat"><img src="{{ url_for('static', filename='watch.webp') }}" alt=""><div><h2>WATCHES</h2><p>Luxury | Style | Precision</p><span>Shop Now →</span></div></a>
-  <a href="#perfumes" class="category perfume-cat"><img src="{{ url_for('static', filename='perfume.webp') }}" alt=""><div><h2>PERFUMES</h2><p>Fragrance | Confidence | You</p><span>Shop Now →</span></div></a>
-</section>
-
-<section class="products-section" id="watches">
-  <div class="section-title"><small>TOP PICKS FOR YOU</small><h2>FEATURED PRODUCTS</h2></div>
-  <div class="products">
-
-    <article class="product" id="perfumes">
-      <div class="photo"><img src="{{ url_for('static', filename='perfume.webp') }}" alt="Beardo Whisky Smoke and Godfather perfume"></div>
-      <div class="details">
-        <span class="tag">BEST SELLER</span>
-        <h3>Beardo Perfume Combo</h3>
-        <p>Whisky Smoke + Godfather</p>
-        <div class="rating">★★★★★ <small>(4.8)</small></div>
-        <div class="price">₹1,999/-</div>
-        <ul><li>Long Lasting Fragrance</li><li>Premium Quality</li><li>100% Original Product</li></ul>
-        <button class="buy wide" onclick="buyNow(1)">🛒 BUY NOW</button>
-        <button class="add" onclick="addToCart(1)">ADD TO CART</button>
-      </div>
-    </article>
-
-    <article class="product">
-      <div class="photo"><img src="{{ url_for('static', filename='watch.webp') }}" alt="Premium gold men's watch"></div>
-      <div class="details">
-        <span class="tag">BEST SELLER</span>
-        <h3>Premium Men's Watch</h3>
-        <p>Stylish | Durable | Elegant</p>
-        <div class="rating">★★★★★ <small>(4.7)</small></div>
-        <div class="price">₹999/-</div>
-        <ul><li>Stylish Design</li><li>Premium Finish</li><li>Comfortable Wear</li></ul>
-        <button class="buy wide" onclick="buyNow(2)">🛒 BUY NOW</button>
-        <button class="add" onclick="addToCart(2)">ADD TO CART</button>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<section class="about" id="about">
-  <div><small>THE MOHSIN STANDARD</small><h2>Style. Fragrance. Elegance.</h2></div>
-  <p>ROYAL.SHOPING is an online destination for watches and perfumes. Browse our collection, add products to your cart and place an order directly through WhatsApp.</p>
-</section>
-
-<section class="contact" id="contact">
-  <small>CONTACT ROYAL.SHOPING</small><h2>Ready to order?</h2>
-  <p>For product availability and orders, contact us on WhatsApp.</p>
-  <a class="buy" href="https://wa.me/917887889634" target="_blank">CHAT ON WHATSAPP</a>
-
-  <div class="store-location">
-    <div class="location-copy">
-      <span class="location-icon">📍</span>
-      <div>
-        <small>VISIT OUR STORE</small>
-        <h3>ROYAL SERVICE</h3>
-        <p>Bhagyoday Nagar, Near Mohammadiya Masjid<br>Kondhwa Khurd, Pune - 411048</p>
-        <a class="map-btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=Royal+Service,+Bhagyoday+Nagar,+Near+Mohammadiya+Masjid,+Kondhwa+Khurd,+Pune+411048" target="_blank" rel="noopener">📍 GET DIRECTIONS IN GOOGLE MAPS →</a><a class="map-btn" style="margin-left:8px" href="https://www.google.com/maps/search/?api=1&amp;query=Royal+Service+Bhagyoday+Nagar+Near+Mohammadiya+Masjid+Kondhwa+Khurd+Pune+411048" target="_blank" rel="noopener">🔎 VIEW LOCATION</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div><strong>ROYAL.SHOPING</strong><small>WATCHES & PERFUMES</small></div>
-  <div>Quick Links · Watches · Perfumes · About · Contact</div>
-  <div>© 2026 ROYAL.SHOPING. All Rights Reserved.</div>
-</footer>
-
-<div class="modal" id="cartModal" onclick="if(event.target===this)closeCart()">
-  <div class="cart">
-    <button class="x" onclick="closeCart()">×</button>
-    <h2>Your Cart</h2>
-    <div id="cartItems"></div>
-    <div class="cart-total"><span>Total</span><b id="total">₹0/-</b></div>
-    <button class="buy wide" onclick="checkout()">CHECKOUT & ENTER DELIVERY DETAILS</button>
-  </div>
-</div>
-
-<script src="{{ url_for('static', filename='script.js') }}"></script>
-
-
-
-</body>
-</html>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+    background-color: #f3f4f6;
+    color: #333;
+}
+header {
+    background: #ffffff;
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #e91e63;
+}
+.nav-links span {
+    cursor: pointer;
+    font-weight: 600;
+    background: #ffebee;
+    padding: 8px 15px;
+    border-radius: 20px;
+    color: #e91e63;
+}
+.hero-banner {
+    background: linear-gradient(135deg, #e91e63, #c2185b);
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+}
+.hero-banner h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+.container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+.container h2 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #444;
+}
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+.product-card {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.product-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.product-card h3 {
+    font-size: 16px;
+    margin: 10px 0 5px;
+}
+.desc {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 10px;
+}
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #e91e63;
+    margin-bottom: 12px;
+}
+.btn-buy {
+    background: #e91e63;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn-buy:hover {
+    background: #c2185b;
+}
+/* Modal Popup Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    position: relative;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.close:hover { color: black; }
+.modal-content h2 { margin-bottom: 15px; font-size: 18px; color: #e91e63; }
+.modal-content label { display: block; margin-top: 10px; font-size: 13px; font-weight: 600; }
+.modal-content input, .modal-content textarea, .modal-content select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.btn-submit {
+    background: #25d366;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #222;
+    color: white;
+    font-size: 13px;
+    margin-top: 40px;
+}
