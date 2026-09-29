@@ -2,18 +2,30 @@ let cartCount = 0;
 
 function addToCart(productName) {
     cartCount++;
-    document.getElementById('cart-count').innerText = cartCount;
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+        cartCountElement.innerText = cartCount;
+    }
     alert(productName + ' cart me add ho gaya hai!');
 }
 
 function buyNow(name, price) {
-    document.getElementById('prodName').value = name;
-    document.getElementById('prodPrice').value = price;
-    document.getElementById('checkoutModal').style.display = 'block';
+    const prodNameInput = document.getElementById('prodName');
+    const prodPriceInput = document.getElementById('prodPrice');
+    const checkoutModal = document.getElementById('checkoutModal');
+
+    if (prodNameInput && prodPriceInput && checkoutModal) {
+        prodNameInput.value = name;
+        prodPriceInput.value = price;
+        checkoutModal.style.display = 'block';
+    }
 }
 
 function closeCheckout() {
-    document.getElementById('checkoutModal').style.display = 'none';
+    const checkoutModal = document.getElementById('checkoutModal');
+    if (checkoutModal) {
+        checkoutModal.style.display = 'none';
+    }
 }
 
 function submitOrder(event) {
@@ -33,7 +45,7 @@ function submitOrder(event) {
                   `📍 *Address:* ${address}%0A` +
                   `💳 *Payment:* ${payment}`;
 
-    let ownerWhatsApp = "919888888888"; 
+    let ownerWhatsApp = "919888888888"; // Yahan apna WhatsApp number daal sakte hain
     let whatsappUrl = `https://wa.me/\({ownerWhatsApp}?text=\){message}`;
     window.open(whatsappUrl, '_blank');
 }
