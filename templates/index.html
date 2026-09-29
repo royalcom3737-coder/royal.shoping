@@ -1,29 +1,231 @@
-👑 ROYAL.SHOPING
-🛒 Cart (0)
-Kondhwa, Pune's Trusted Store
-Best Quality Perfumes & Watches | COD Available
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-Trending Products
-Perfume
-Beardo Perfume
-Bold fragrance for a stronger you.
+    <title>ROYAL.SHOPING | Premium Watches & Perfumes</title>
 
-₹1,999
-Watch
-Royal Watch
-Timeless style for every moment.
+    <meta name="description"
+          content="Shop premium watches and perfumes online at ROYAL.SHOPING. Cash on Delivery available.">
 
-₹2,499
-×
-📦 Complete Your Order
-Full Name: 
-Aapka naam
- Mobile Number: 
-10-digit mobile
- Delivery Address: 
-Full address & Pincode
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
 
- Payment Method: 
-Cash on Delivery (COD)
- 
-© 2026 ROYAL.SHOPING | Kondhwa, Pune
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <span>🚚 Free Shipping All Over India</span>
+        <span>💵 Cash On Delivery Available</span>
+        <span>✓ 100% Original Products</span>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            👑 ROYAL.SHOPING
+        </div>
+
+        <button class="cart-button" onclick="openCart()">
+            🛒 Cart (<span id="cartCount">0</span>)
+        </button>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Kondhwa, Pune's Trusted Store</h1>
+        <p>Best Quality Perfumes & Watches | COD Available</p>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="products-section">
+
+        <h2>Trending Products</h2>
+
+        <div class="products">
+
+            <!-- PERFUME -->
+            <div class="product-card">
+
+                <div class="product-image perfume-image">
+                    🌸
+                </div>
+
+                <div class="product-info">
+                    <small>Perfume</small>
+
+                    <h3>Beardo Perfume</h3>
+
+                    <p>Bold fragrance for a stronger you.</p>
+
+                    <div class="price">₹1,999</div>
+
+                    <button
+                        class="buy-button"
+                        onclick="buyNow('Beardo Perfume', 1999)">
+                        Buy Now
+                    </button>
+
+                    <button
+                        class="cart-add"
+                        onclick="addToCart('Beardo Perfume', 1999)">
+                        Add to Cart
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- WATCH -->
+            <div class="product-card">
+
+                <div class="product-image watch-image">
+                    ⌚
+                </div>
+
+                <div class="product-info">
+                    <small>Watch</small>
+
+                    <h3>Royal Watch</h3>
+
+                    <p>Timeless style for every moment.</p>
+
+                    <div class="price">₹2,499</div>
+
+                    <button
+                        class="buy-button"
+                        onclick="buyNow('Royal Watch', 2499)">
+                        Buy Now
+                    </button>
+
+                    <button
+                        class="cart-add"
+                        onclick="addToCart('Royal Watch', 2499)">
+                        Add to Cart
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ORDER MODAL -->
+    <div id="orderModal" class="modal">
+
+        <div class="modal-content">
+
+            <button class="close-button" onclick="closeOrder()">
+                ×
+            </button>
+
+            <h2>📦 Complete Your Order</h2>
+
+            <form id="orderForm" onsubmit="submitOrder(event)">
+
+                <label>Full Name:</label>
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Aapka naam"
+                    required>
+
+                <label>Mobile Number:</label>
+                <input
+                    type="tel"
+                    id="customerMobile"
+                    placeholder="10-digit mobile"
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    required>
+
+                <label>Delivery Address:</label>
+                <textarea
+                    id="customerAddress"
+                    placeholder="Full address & Pincode"
+                    required></textarea>
+
+                <label>Payment Method:</label>
+
+                <div class="payment-box">
+                    <input
+                        type="radio"
+                        checked
+                        disabled>
+
+                    <span>Cash on Delivery (COD)</span>
+                </div>
+
+                <div class="order-summary">
+                    <strong>Product:</strong>
+                    <span id="orderProduct">-</span>
+                    <br>
+                    <strong>Total:</strong>
+                    <span id="orderPrice">₹0</span>
+                </div>
+
+                <button
+                    type="submit"
+                    class="confirm-button">
+                    Confirm Order on WhatsApp
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- CART MODAL -->
+    <div id="cartModal" class="modal">
+
+        <div class="modal-content">
+
+            <button class="close-button" onclick="closeCart()">
+                ×
+            </button>
+
+            <h2>🛒 Your Cart</h2>
+
+            <div id="cartItems"></div>
+
+            <div class="cart-total">
+                Total: ₹<span id="cartTotal">0</span>
+            </div>
+
+            <button
+                class="confirm-button"
+                onclick="checkoutCart()">
+                Order Cart on WhatsApp
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <p>
+            © 2026 ROYAL.SHOPING | Kondhwa, Pune
+        </p>
+
+        <p>
+            📍 Royal Service, Bhagyoday Nagar,
+            Near Mohammadiya Masjid,
+            Kondhwa Khurd, Pune 411048
+        </p>
+    </footer>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
+```
