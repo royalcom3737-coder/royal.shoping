@@ -1,4 +1,4 @@
-```javascript
+
 // ===============================
 // ROYAL.SHOPING
 // Cart + Buy Now + WhatsApp Order
@@ -324,4 +324,4 @@ document.addEventListener("DOMContentLoaded", function() {
     updateCartCount();
 
 });
-```
+
