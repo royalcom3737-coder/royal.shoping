@@ -1,4 +1,4 @@
-```javascript
+alert("SCRIPT JS LOAD HO GAYA");
 // ===============================
 // ROYAL.SHOPING
 // Cart + Buy Now + Quantity + WhatsApp
@@ -491,4 +491,3 @@ document.addEventListener(
         updateCartCount();
     }
 );
-```
