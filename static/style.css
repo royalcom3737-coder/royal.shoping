@@ -300,7 +300,41 @@ footer {
     padding: 25px 15px;
     margin-top: 50px;
 }
+/* CART QUANTITY */
 
+.cart-product-info {
+    flex: 1;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quantity-button {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 6px;
+    background: #111827;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.quantity-number {
+    min-width: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.item-total {
+    margin-top: 8px;
+    font-weight: bold;
+}
 footer p {
     margin: 8px;
 }
