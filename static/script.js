@@ -17,9 +17,15 @@ function updateCartCount() {
 
     const countElement = document.getElementById("cartCount");
 
-    if (countElement) {
-        countElement.innerText = cart.length;
-    }
+    if (!countElement) return;
+
+    let totalQuantity = 0;
+
+    cart.forEach(function(item) {
+        totalQuantity += Number(item.quantity || 1);
+    });
+
+    countElement.innerText = totalQuantity;
 }
 
 
@@ -29,10 +35,23 @@ function updateCartCount() {
 
 function addToCart(productName, price) {
 
-    cart.push({
-        name: productName,
-        price: Number(price)
-    });
+    const existingProduct = cart.find(
+        item => item.name === productName
+    );
+
+    if (existingProduct) {
+
+        existingProduct.quantity =
+            Number(existingProduct.quantity || 1) + 1;
+
+    } else {
+
+        cart.push({
+            name: productName,
+            price: Number(price),
+            quantity: 1
+        });
+    }
 
     localStorage.setItem(
         "royalShopingCart",
@@ -150,6 +169,71 @@ function displayCart() {
 
         return;
     }
+
+    let total = 0;
+
+    cart.forEach(function(item, index) {
+
+        const price = Number(item.price);
+        const quantity = Number(item.quantity || 1);
+        const itemTotal = price * quantity;
+
+        total += itemTotal;
+
+        const div = document.createElement("div");
+
+        div.className = "cart-item";
+
+        div.innerHTML = `
+            <div class="cart-product-info">
+
+                <strong>${item.name}</strong>
+
+                <br>
+
+                ₹${price.toLocaleString("en-IN")}
+                × ${quantity}
+
+                <div class="quantity-controls">
+
+                    <button
+                        class="quantity-button"
+                        onclick="decreaseQuantity(${index})">
+                        −
+                    </button>
+
+                    <span class="quantity-number">
+                        ${quantity}
+                    </span>
+
+                    <button
+                        class="quantity-button"
+                        onclick="increaseQuantity(${index})">
+                        +
+                    </button>
+
+                </div>
+
+                <div class="item-total">
+                    Item Total:
+                    ₹${itemTotal.toLocaleString("en-IN")}
+                </div>
+
+            </div>
+
+            <button
+                class="remove-item"
+                onclick="removeFromCart(${index})">
+                Remove
+            </button>
+        `;
+
+        cartItems.appendChild(div);
+    });
+
+    cartTotal.innerText =
+        total.toLocaleString("en-IN");
+}
 
     let total = 0;
 
@@ -355,4 +439,44 @@ document.addEventListener("DOMContentLoaded", function() {
     updateCartCount();
 
 });
+function increaseQuantity(index) {
 
+    if (!cart[index]) return;
+
+    cart[index].quantity =
+        Number(cart[index].quantity || 1) + 1;
+
+    localStorage.setItem(
+        "royalShopingCart",
+        JSON.stringify(cart)
+    );
+
+    updateCartCount();
+    displayCart();
+}
+
+
+function decreaseQuantity(index) {
+
+    if (!cart[index]) return;
+
+    const quantity =
+        Number(cart[index].quantity || 1);
+
+    if (quantity > 1) {
+
+        cart[index].quantity = quantity - 1;
+
+    } else {
+
+        cart.splice(index, 1);
+    }
+
+    localStorage.setItem(
+        "royalShopingCart",
+        JSON.stringify(cart)
+    );
+
+    updateCartCount();
+    displayCart();
+}
