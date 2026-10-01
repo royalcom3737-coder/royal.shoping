@@ -1,7 +1,7 @@
-
+```javascript
 // ===============================
 // ROYAL.SHOPING
-// Cart + Buy Now + WhatsApp Order
+// Cart + Buy Now + Quantity + WhatsApp
 // ===============================
 
 const OWNER_WHATSAPP = "917887889634";
@@ -36,7 +36,9 @@ function updateCartCount() {
 function addToCart(productName, price) {
 
     const existingProduct = cart.find(
-        item => item.name === productName
+        function(item) {
+            return item.name === productName;
+        }
     );
 
     if (existingProduct) {
@@ -70,16 +72,19 @@ function addToCart(productName, price) {
 
 function buyNow(name, price) {
 
+    const modal =
+        document.getElementById("orderModal");
+
+    if (!modal) {
+        alert("Order window nahi mil raha.");
+        return;
+    }
+
     const productElement =
         document.getElementById("orderProduct");
 
     const priceElement =
         document.getElementById("orderPrice");
-
-    const modal =
-        document.getElementById("orderModal");
-
-    if (!modal) return;
 
     if (productElement) {
         productElement.innerText = name;
@@ -180,7 +185,8 @@ function displayCart() {
 
         total += itemTotal;
 
-        const div = document.createElement("div");
+        const div =
+            document.createElement("div");
 
         div.className = "cart-item";
 
@@ -235,36 +241,55 @@ function displayCart() {
         total.toLocaleString("en-IN");
 }
 
-    let total = 0;
 
-    cart.forEach((item, index) => {
+// ===============================
+// INCREASE QUANTITY
+// ===============================
 
-        total += Number(item.price);
+function increaseQuantity(index) {
 
-        const div =
-            document.createElement("div");
+    if (!cart[index]) return;
 
-        div.className = "cart-item";
+    cart[index].quantity =
+        Number(cart[index].quantity || 1) + 1;
 
-        div.innerHTML = `
-            <div>
-                <strong>${item.name}</strong>
-                <br>
-                ₹${Number(item.price).toLocaleString("en-IN")}
-            </div>
+    localStorage.setItem(
+        "royalShopingCart",
+        JSON.stringify(cart)
+    );
 
-            <button
-                class="remove-item"
-                onclick="removeFromCart(${index})">
-                Remove
-            </button>
-        `;
+    updateCartCount();
+    displayCart();
+}
 
-        cartItems.appendChild(div);
-    });
 
-    cartTotal.innerText =
-        total.toLocaleString("en-IN");
+// ===============================
+// DECREASE QUANTITY
+// ===============================
+
+function decreaseQuantity(index) {
+
+    if (!cart[index]) return;
+
+    const quantity =
+        Number(cart[index].quantity || 1);
+
+    if (quantity > 1) {
+
+        cart[index].quantity = quantity - 1;
+
+    } else {
+
+        cart.splice(index, 1);
+    }
+
+    localStorage.setItem(
+        "royalShopingCart",
+        JSON.stringify(cart)
+    );
+
+    updateCartCount();
+    displayCart();
 }
 
 
@@ -274,6 +299,8 @@ function displayCart() {
 
 function removeFromCart(index) {
 
+    if (!cart[index]) return;
+
     cart.splice(index, 1);
 
     localStorage.setItem(
@@ -282,7 +309,6 @@ function removeFromCart(index) {
     );
 
     updateCartCount();
-
     displayCart();
 }
 
@@ -296,7 +322,6 @@ function checkoutCart() {
     if (cart.length === 0) {
 
         alert("Cart empty hai bhai 🛒");
-
         return;
     }
 
@@ -305,16 +330,23 @@ function checkoutCart() {
 
     let total = 0;
 
-    cart.forEach((item, index) => {
+    cart.forEach(function(item, index) {
 
-        total += Number(item.price);
+        const price = Number(item.price);
+        const quantity = Number(item.quantity || 1);
+        const itemTotal = price * quantity;
+
+        total += itemTotal;
 
         message +=
-            `${index + 1}. ${item.name} - ₹${Number(item.price).toLocaleString("en-IN")}%0A`;
+            `${index + 1}. ${item.name}%0A` +
+            `Qty: ${quantity}%0A` +
+            `Price: ₹${price.toLocaleString("en-IN")}%0A` +
+            `Subtotal: ₹${itemTotal.toLocaleString("en-IN")}%0A%0A`;
     });
 
     message +=
-        `%0A*Total: ₹${total.toLocaleString("en-IN")}*%0A` +
+        `*Total: ₹${total.toLocaleString("en-IN")}*%0A` +
         `💳 Payment: Cash on Delivery (COD)`;
 
     const whatsappURL =
@@ -334,6 +366,8 @@ function submitOrder(event) {
 
     const modal =
         document.getElementById("orderModal");
+
+    if (!modal) return;
 
     const product =
         modal.dataset.product || "";
@@ -400,7 +434,7 @@ function submitOrder(event) {
 
 
 // ===============================
-// CLOSE MODAL OUTSIDE CLICK
+// CLOSE MODALS OUTSIDE CLICK
 // ===============================
 
 window.addEventListener("click", function(event) {
@@ -434,49 +468,27 @@ window.addEventListener("click", function(event) {
 // INITIALIZE
 // ===============================
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
 
-    updateCartCount();
+        // Old cart items ko quantity 1 maanenge
+        cart = cart.map(function(item) {
 
-});
-function increaseQuantity(index) {
+            return {
+                name: item.name,
+                price: Number(item.price),
+                quantity: Number(item.quantity || 1)
+            };
 
-    if (!cart[index]) return;
+        });
 
-    cart[index].quantity =
-        Number(cart[index].quantity || 1) + 1;
+        localStorage.setItem(
+            "royalShopingCart",
+            JSON.stringify(cart)
+        );
 
-    localStorage.setItem(
-        "royalShopingCart",
-        JSON.stringify(cart)
-    );
-
-    updateCartCount();
-    displayCart();
-}
-
-
-function decreaseQuantity(index) {
-
-    if (!cart[index]) return;
-
-    const quantity =
-        Number(cart[index].quantity || 1);
-
-    if (quantity > 1) {
-
-        cart[index].quantity = quantity - 1;
-
-    } else {
-
-        cart.splice(index, 1);
+        updateCartCount();
     }
-
-    localStorage.setItem(
-        "royalShopingCart",
-        JSON.stringify(cart)
-    );
-
-    updateCartCount();
-    displayCart();
-}
+);
+```
