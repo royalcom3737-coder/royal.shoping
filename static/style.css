@@ -360,3 +360,56 @@ footer p {
     object-fit: contain;
     display: block;
 }
+```css
+/* ==============================
+   CART QUANTITY CONTROLS
+============================== */
+
+.cart-product-info {
+    flex: 1;
+}
+
+.cart-price {
+    color: #666;
+    margin-top: 5px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quantity-button {
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 6px;
+    background: #111827;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.quantity-button:hover {
+    background: #374151;
+}
+
+.quantity-number {
+    min-width: 25px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.item-total {
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+.remove-item {
+    align-self: flex-start;
+}
+```
