@@ -1,141 +1,53 @@
-```javascript
-// ==========================================
+
+// ===============================
 // ROYAL.SHOPING
-// Cart Quantity + Buy Now + WhatsApp Order
-// ==========================================
+// Cart + Buy Now + WhatsApp Order
+// ===============================
 
 const OWNER_WHATSAPP = "917887889634";
 
 let cart = JSON.parse(localStorage.getItem("royalShopingCart")) || [];
 
 
-// ==========================================
-// SAVE CART
-// ==========================================
-
-function saveCart() {
-    localStorage.setItem(
-        "royalShopingCart",
-        JSON.stringify(cart)
-    );
-}
-
-
-// ==========================================
+// ===============================
 // CART COUNT
-// ==========================================
+// ===============================
 
 function updateCartCount() {
 
     const countElement = document.getElementById("cartCount");
 
-    if (!countElement) return;
-
-    const totalQuantity = cart.reduce(
-        (total, item) => total + Number(item.quantity || 1),
-        0
-    );
-
-    countElement.innerText = totalQuantity;
+    if (countElement) {
+        countElement.innerText = cart.length;
+    }
 }
 
 
-// ==========================================
+// ===============================
 // ADD TO CART
-// ==========================================
+// ===============================
 
 function addToCart(productName, price) {
 
-    price = Number(price);
+    cart.push({
+        name: productName,
+        price: Number(price)
+    });
 
-    const existingProduct = cart.find(
-        item => item.name === productName
+    localStorage.setItem(
+        "royalShopingCart",
+        JSON.stringify(cart)
     );
 
-    if (existingProduct) {
-
-        existingProduct.quantity =
-            Number(existingProduct.quantity || 1) + 1;
-
-    } else {
-
-        cart.push({
-            name: productName,
-            price: price,
-            quantity: 1
-        });
-    }
-
-    saveCart();
     updateCartCount();
-    displayCart();
 
     alert(productName + " cart me add ho gaya hai! 🛒");
 }
 
 
-// ==========================================
-// INCREASE QUANTITY
-// ==========================================
-
-function increaseQuantity(index) {
-
-    if (!cart[index]) return;
-
-    cart[index].quantity =
-        Number(cart[index].quantity || 1) + 1;
-
-    saveCart();
-    updateCartCount();
-    displayCart();
-}
-
-
-// ==========================================
-// DECREASE QUANTITY
-// ==========================================
-
-function decreaseQuantity(index) {
-
-    if (!cart[index]) return;
-
-    const quantity =
-        Number(cart[index].quantity || 1);
-
-    if (quantity > 1) {
-
-        cart[index].quantity = quantity - 1;
-
-    } else {
-
-        cart.splice(index, 1);
-    }
-
-    saveCart();
-    updateCartCount();
-    displayCart();
-}
-
-
-// ==========================================
-// REMOVE FROM CART
-// ==========================================
-
-function removeFromCart(index) {
-
-    if (!cart[index]) return;
-
-    cart.splice(index, 1);
-
-    saveCart();
-    updateCartCount();
-    displayCart();
-}
-
-
-// ==========================================
+// ===============================
 // BUY NOW
-// ==========================================
+// ===============================
 
 function buyNow(name, price) {
 
@@ -166,9 +78,9 @@ function buyNow(name, price) {
 }
 
 
-// ==========================================
+// ===============================
 // CLOSE ORDER
-// ==========================================
+// ===============================
 
 function closeOrder() {
 
@@ -181,9 +93,9 @@ function closeOrder() {
 }
 
 
-// ==========================================
+// ===============================
 // OPEN CART
-// ==========================================
+// ===============================
 
 function openCart() {
 
@@ -198,9 +110,9 @@ function openCart() {
 }
 
 
-// ==========================================
+// ===============================
 // CLOSE CART
-// ==========================================
+// ===============================
 
 function closeCart() {
 
@@ -213,9 +125,9 @@ function closeCart() {
 }
 
 
-// ==========================================
+// ===============================
 // DISPLAY CART
-// ==========================================
+// ===============================
 
 function displayCart() {
 
@@ -243,15 +155,7 @@ function displayCart() {
 
     cart.forEach((item, index) => {
 
-        const price = Number(item.price);
-
-        const quantity =
-            Number(item.quantity || 1);
-
-        const itemTotal =
-            price * quantity;
-
-        total += itemTotal;
+        total += Number(item.price);
 
         const div =
             document.createElement("div");
@@ -259,40 +163,10 @@ function displayCart() {
         div.className = "cart-item";
 
         div.innerHTML = `
-            <div class="cart-product-info">
-
+            <div>
                 <strong>${item.name}</strong>
-
-                <div class="cart-price">
-                    ₹${price.toLocaleString("en-IN")}
-                    × ${quantity}
-                </div>
-
-                <div class="quantity-controls">
-
-                    <button
-                        class="quantity-button"
-                        onclick="decreaseQuantity(${index})">
-                        −
-                    </button>
-
-                    <span class="quantity-number">
-                        ${quantity}
-                    </span>
-
-                    <button
-                        class="quantity-button"
-                        onclick="increaseQuantity(${index})">
-                        +
-                    </button>
-
-                </div>
-
-                <div class="item-total">
-                    Item Total:
-                    ₹${itemTotal.toLocaleString("en-IN")}
-                </div>
-
+                <br>
+                ₹${Number(item.price).toLocaleString("en-IN")}
             </div>
 
             <button
@@ -310,9 +184,28 @@ function displayCart() {
 }
 
 
-// ==========================================
+// ===============================
+// REMOVE FROM CART
+// ===============================
+
+function removeFromCart(index) {
+
+    cart.splice(index, 1);
+
+    localStorage.setItem(
+        "royalShopingCart",
+        JSON.stringify(cart)
+    );
+
+    updateCartCount();
+
+    displayCart();
+}
+
+
+// ===============================
 // CHECKOUT CART
-// ==========================================
+// ===============================
 
 function checkoutCart() {
 
@@ -330,25 +223,14 @@ function checkoutCart() {
 
     cart.forEach((item, index) => {
 
-        const price = Number(item.price);
-
-        const quantity =
-            Number(item.quantity || 1);
-
-        const itemTotal =
-            price * quantity;
-
-        total += itemTotal;
+        total += Number(item.price);
 
         message +=
-            `${index + 1}. ${item.name}%0A` +
-            `   Qty: ${quantity}%0A` +
-            `   Price: ₹${price.toLocaleString("en-IN")}%0A` +
-            `   Subtotal: ₹${itemTotal.toLocaleString("en-IN")}%0A%0A`;
+            `${index + 1}. ${item.name} - ₹${Number(item.price).toLocaleString("en-IN")}%0A`;
     });
 
     message +=
-        `*Total: ₹${total.toLocaleString("en-IN")}*%0A` +
+        `%0A*Total: ₹${total.toLocaleString("en-IN")}*%0A` +
         `💳 Payment: Cash on Delivery (COD)`;
 
     const whatsappURL =
@@ -358,9 +240,9 @@ function checkoutCart() {
 }
 
 
-// ==========================================
+// ===============================
 // SUBMIT BUY NOW ORDER
-// ==========================================
+// ===============================
 
 function submitOrder(event) {
 
@@ -368,8 +250,6 @@ function submitOrder(event) {
 
     const modal =
         document.getElementById("orderModal");
-
-    if (!modal) return;
 
     const product =
         modal.dataset.product || "";
@@ -390,7 +270,6 @@ function submitOrder(event) {
         .value.trim();
 
 
-    // Mobile validation
     if (!/^[0-9]{10}$/.test(mobile)) {
 
         alert(
@@ -430,67 +309,50 @@ function submitOrder(event) {
         `https://wa.me/${OWNER_WHATSAPP}?text=${message}`;
 
 
-    window.open(
-        whatsappURL,
-        "_blank"
-    );
-
+    window.open(whatsappURL, "_blank");
 
     closeOrder();
 }
 
 
-// ==========================================
+// ===============================
 // CLOSE MODAL OUTSIDE CLICK
-// ==========================================
+// ===============================
 
-window.addEventListener(
-    "click",
-    function(event) {
+window.addEventListener("click", function(event) {
 
-        const orderModal =
-            document.getElementById("orderModal");
+    const orderModal =
+        document.getElementById("orderModal");
 
-        const cartModal =
-            document.getElementById("cartModal");
+    const cartModal =
+        document.getElementById("cartModal");
 
 
-        if (
-            orderModal &&
-            event.target === orderModal
-        ) {
-            closeOrder();
-        }
-
-
-        if (
-            cartModal &&
-            event.target === cartModal
-        ) {
-            closeCart();
-        }
+    if (
+        orderModal &&
+        event.target === orderModal
+    ) {
+        closeOrder();
     }
-);
 
 
-// ==========================================
+    if (
+        cartModal &&
+        event.target === cartModal
+    ) {
+        closeCart();
+    }
+
+});
+
+
+// ===============================
 // INITIALIZE
-// ==========================================
+// ===============================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function() {
+document.addEventListener("DOMContentLoaded", function() {
 
-        // Convert old cart items to quantity format
-        cart = cart.map(item => ({
-            name: item.name,
-            price: Number(item.price),
-            quantity: Number(item.quantity || 1)
-        }));
+    updateCartCount();
 
-        saveCart();
+});
 
-        updateCartCount();
-    }
-);
-```
