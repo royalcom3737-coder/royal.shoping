@@ -1,1 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Owner Panel | ROYAL.SHOPING</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        header {
+            background: #111;
+            color: white;
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .logout {
+            background: #fff;
+            color: #111;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            margin-bottom: 5px;
+        }
+
+        .add-box {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 35px;
+        }
+
+        .add-box h2 {
+            margin-top: 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        .add-button {
+            margin-top: 18px;
+            background: #111;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .products-title {
+            margin-bottom: 18px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .product {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .product-image {
+            height: 220px;
+            background: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .product-info {
+            padding: 18px;
+        }
+
+        .product-info h3 {
+            margin: 5px 0;
+        }
+
+        .category {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .price {
+            font-size: 21px;
+            font-weight: bold;
+            margin: 12px 0;
+        }
+
+        .stock {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .in-stock {
+            color: green;
+        }
+
+        .out-stock {
+            color: red;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .delete-button {
+            flex: 1;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .edit-button {
+            flex: 1;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 11px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .empty {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 650px) {
+
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        👑 ROYAL.SHOPING — OWNER PANEL
+    </div>
+
+    <a href="/owner/logout" class="logout">
+        Logout
+    </a>
+
+</header>
+
+
+<div class="container">
+
+    <div class="welcome">
+
+        <h1>📦 Product Management</h1>
+
+        <p>
+            Yahan se tum apne store ke products add aur manage kar sakte ho.
+        </p>
+
+    </div>
+
+
+    <!-- ADD PRODUCT -->
+
+    <div class="add-box">
+
+        <h2>➕ Add New Product</h2>
+
+        <form method="POST" action="/owner/add-product">
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Product Name</label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Example: Royal Watch"
+                        required>
+                </div>
+
+
+                <div>
+                    <label>Category</label>
+
+                    <select name="category" required>
+
+                        <option value="">
+                            Select Category
+                        </option>
+
+                        <option value="Watch">
+                            Watch
+                        </option>
+
+                        <option value="Perfume">
+                            Perfume
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+                </div>
+
+
+                <div class="full">
+
+                    <label>Description</label>
+
+                    <textarea
+                        name="description"
+                        placeholder="Product description"
+                        required></textarea>
+
+                </div>
+
+
+                <div>
+
+                    <label>Price (₹)</label>
+
+                    <input
+                        type="number"
+                        name="price"
+                        min="0"
+                        step="1"
+                        placeholder="999"
+                        required>
+
+                </div>
+
+
+                <div>
+
+                    <label>Stock Quantity</label>
+
+                    <input
+                        type="number"
+                        name="stock"
+                        min="0"
+                        step="1"
+                        placeholder="10"
+                        required>
+
+                </div>
+
+
+                <div class="full">
+
+                    <label>Product Image</label>
+
+                    <input
+                        type="text"
+                        name="image"
+                        placeholder="Example: watch.webp"
+                        required>
+
+                    <small>
+                        Image ko static folder mein rakho,
+                        phir yahan filename likho.
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="add-button">
+
+                ➕ Add Product
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- EXISTING PRODUCTS -->
+
+    <h2 class="products-title">
+        🛍️ Your Products
+    </h2>
+
+
+    {% if products %}
+
+        <div class="products">
+
+            {% for product in products %}
+
+                <div class="product">
+
+                    <div class="product-image">
+
+                        {% if product.image %}
+
+                            <img
+                                src="{{ url_for('static', filename=product.image) }}"
+                                alt="{{ product.name }}">
+
+                        {% else %}
+
+                            <span>No Image</span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="product-info">
+
+                        <div class="category">
+                            {{ product.category }}
+                        </div>
+
+                        <h3>
+                            {{ product.name }}
+                        </h3>
+
+                        <p>
+                            {{ product.description }}
+                        </p>
+
+                        <div class="price">
+                            ₹{{ "{:,.0f}".format(product.price) }}
+                        </div>
+
+
+                        {% if product.stock > 0 %}
+
+                            <div class="stock in-stock">
+                                🟢 Stock: {{ product.stock }}
+                            </div>
+
+                        {% else %}
+
+                            <div class="stock out-stock">
+                                🔴 Out of Stock
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="actions">
+
+                            <button
+                                class="edit-button"
+                                onclick="editProduct(
+                                    '{{ product.id }}',
+                                    '{{ product.name|replace("'", "\\'") }}',
+                                    '{{ product.category }}',
+                                    '{{ product.description|replace("'", "\\'") }}',
+                                    '{{ product.price }}',
+                                    '{{ product.image|replace("'", "\\'") }}',
+                                    '{{ product.stock }}'
+                                )">
+
+                                ✏️ Edit
+
+                            </button>
+
+
+                            <form
+                                method="POST"
+                                action="/owner/delete-product/{{ product.id }}"
+                                onsubmit="return confirm('Delete this product?');"
+                                style="flex:1;">
+
+                                <button
+                                    type="submit"
+                                    class="delete-button">
+
+                                    🗑️ Delete
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty">
+
+            <h3>📦 No Products Yet</h3>
+
+            <p>
+                Upar se apna first product add karo.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+<script>
+
+function editProduct(
+    id,
+    name,
+    category,
+    description,
+    price,
+    image,
+    stock
+) {
+
+    const newName =
+        prompt("Product Name:", name);
+
+    if (newName === null) return;
+
+
+    const newPrice =
+        prompt("Price:", price);
+
+    if (newPrice === null) return;
+
+
+    const newStock =
+        prompt("Stock Quantity:", stock);
+
+    if (newStock === null) return;
+
+
+    const form =
+        document.createElement("form");
+
+    form.method = "POST";
+
+    form.action =
+        "/owner/update-product/" + id;
+
+
+    const fields = {
+
+        name: newName,
+        category: category,
+        description: description,
+        price: newPrice,
+        image: image,
+        stock: newStock
+
+    };
+
+
+    Object.keys(fields).forEach(function(key) {
+
+        const input =
+            document.createElement("input");
+
+        input.type = "hidden";
+
+        input.name = key;
+
+        input.value = fields[key];
+
+        form.appendChild(input);
+
+    });
+
+
+    document.body.appendChild(form);
+
+    form.submit();
+}
+
+</script>
+
+</body>
+</html>
