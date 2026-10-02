@@ -1,0 +1,20 @@
+[
+    {
+        "id": "royal-watch-001",
+        "name": "Royal Watch",
+        "category": "Watch",
+        "description": "Timeless style for every moment.",
+        "price": 2499,
+        "image": "watch.webp",
+        "stock": 10
+    },
+    {
+        "id": "beardo-perfume-001",
+        "name": "Beardo Perfume",
+        "category": "Perfume",
+        "description": "Bold fragrance for a stronger you.",
+        "price": 1999,
+        "image": "perfume.webp",
+        "stock": 10
+    }
+]
