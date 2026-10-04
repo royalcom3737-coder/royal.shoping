@@ -193,7 +193,30 @@ def update_product(product_id):
     save_products(products)
 
     return redirect(url_for("owner_panel"))
+# ===============================
+# PRODUCT DETAIL PAGE
+# ===============================
 
+@app.route("/product/<product_id>")
+def product_detail(product_id):
+
+    products = load_products()
+
+    product = next(
+        (
+            p for p in products
+            if p.get("id") == product_id
+        ),
+        None
+    )
+
+    if not product:
+        return "Product not found", 404
+
+    return render_template(
+        "product_detail.html",
+        product=product
+    )
 
 # ===============================
 # PRODUCTS API
