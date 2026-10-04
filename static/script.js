@@ -638,3 +638,13 @@ function filterProducts(category) {
     });
 
 }
+// ===============================
+// PRODUCT DETAIL PAGE
+// ===============================
+
+function openProduct(productId) {
+
+    window.location.href =
+        "/product/" + productId;
+
+}
