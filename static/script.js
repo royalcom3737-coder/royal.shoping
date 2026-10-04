@@ -442,7 +442,27 @@ function submitOrder(event) {
     const address =
         document.getElementById("customerAddress")
         .value.trim();
+const latitude =
+    document.getElementById("customerLatitude").value;
 
+const longitude =
+    document.getElementById("customerLongitude").value;
+
+let locationMessage = "";
+
+if (latitude && longitude) {
+
+    const mapsLink =
+        `https://www.google.com/maps?q=${latitude},${longitude}`;
+
+    locationMessage =
+        `📍 *Customer Location:* ${mapsLink}%0A`;
+
+} else {
+
+    locationMessage =
+        `📍 *Customer Location:* Not shared%0A`;
+}
 
     if (!/^[0-9]{10}$/.test(mobile)) {
 
@@ -475,6 +495,7 @@ function submitOrder(event) {
         `📞 *Mobile:* ${mobile}%0A` +
 
         `📍 *Address:* ${address}%0A` +
+        locationMessage +
 
         `💳 *Payment:* Cash on Delivery (COD)`;
 
