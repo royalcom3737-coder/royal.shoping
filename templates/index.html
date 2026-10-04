@@ -71,79 +71,100 @@
         <p>Best Quality Perfumes & Watches | COD Available</p>
     </section>
 
-    <!-- PRODUCTS -->
-    <section class="products-section">
+<!-- PRODUCTS -->
+<section class="products-section">
 
-        <h2>Trending Products</h2>
+    <h2>Trending Products</h2>
 
-        <div class="products">
+    <div class="products">
 
-            <!-- PERFUME -->
-            <div class="product-card">
+        {% for product in products %}
 
-                <div class="product-image">
-    <img src="{{ url_for('static', filename='perfume.webp') }}" alt="Beardo Perfume">
-</div>
+        <div class="product-card">
 
-                <div class="product-info">
-                    <small>Perfume</small>
+            <!-- PRODUCT IMAGE -->
+            <div class="product-image">
 
-                    <h3>Beardo Perfume</h3>
-
-                    <p>Bold fragrance for a stronger you.</p>
-
-                    <div class="price">₹1,999</div>
-
-                    <button
-                        class="buy-button"
-                        onclick="buyNow('Beardo Perfume', 1999)">
-                        Buy Now
-                    </button>
-
-                    <button
-                        class="cart-add"
-                        onclick="addToCart('Beardo Perfume', 1999)">
-                        Add to Cart
-                    </button>
-                </div>
+                <img
+                    src="{{ url_for('static', filename=product.image) }}"
+                    alt="{{ product.name }}"
+                >
 
             </div>
 
 
-            <!-- WATCH -->
-            <div class="product-card">
-<div class="product-image">
-    <img src="{{ url_for('static', filename='watch.webp') }}" alt="Royal Watch">
-</div>
+            <!-- PRODUCT INFO -->
+            <div class="product-info">
 
-                <div class="product-info">
-                    <small>Watch</small>
+                <small>
+                    {{ product.category }}
+                </small>
 
-                    <h3>Royal Watch</h3>
+                <h3>
+                    {{ product.name }}
+                </h3>
 
-                    <p>Timeless style for every moment.</p>
+                <p>
+                    {{ product.description }}
+                </p>
 
-                    <div class="price">₹2,499</div>
+
+                <!-- PRICE -->
+                <div class="price">
+                    ₹{{ "{:,.0f}".format(product.price) }}
+                </div>
+
+
+                <!-- STOCK STATUS -->
+                {% if product.stock|default(0)|int > 0 %}
+
+                    <div class="stock-status in-stock">
+                        🟢 In Stock
+                    </div>
 
                     <button
                         class="buy-button"
-                        onclick="buyNow('Royal Watch', 2499)">
+                        onclick="buyNow(
+                            '{{ product.name }}',
+                            {{ product.price }}
+                        )">
                         Buy Now
                     </button>
 
                     <button
                         class="cart-add"
-                        onclick="addToCart('Royal Watch', 2499)">
+                        onclick="addToCart(
+                            '{{ product.name }}',
+                            {{ product.price }}
+                        )">
                         Add to Cart
                     </button>
-                </div>
+
+                {% else %}
+
+                    <div class="stock-status out-of-stock">
+                        🔴 Out of Stock
+                    </div>
+
+                    <button
+                        class="buy-button"
+                        disabled>
+                        Out of Stock
+                    </button>
+
+                {% endif %}
 
             </div>
 
         </div>
 
-    </section>
-<!-- TRUST SECTION -->
+        {% endfor %}
+
+    </div>
+
+</section>
+
+       <!-- TRUST SECTION -->
 <section class="trust-section">
 
     <div class="trust-grid">
