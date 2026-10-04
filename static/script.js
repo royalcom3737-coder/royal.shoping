@@ -354,7 +354,63 @@ function checkoutCart() {
 
     window.open(whatsappURL, "_blank");
 }
+// ===============================
+// CUSTOMER CURRENT LOCATION
+// ===============================
 
+function getCustomerLocation() {
+
+    const status = document.getElementById("locationStatus");
+
+    if (!navigator.geolocation) {
+
+        alert("Aapke browser mein location support nahi hai.");
+        return;
+    }
+
+    if (status) {
+        status.innerText = "📍 Location detect ho rahi hai...";
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            document.getElementById("customerLatitude").value =
+                latitude;
+
+            document.getElementById("customerLongitude").value =
+                longitude;
+
+            if (status) {
+                status.innerText =
+                    "✅ Location successfully added";
+            }
+
+        },
+
+        function(error) {
+
+            if (status) {
+                status.innerText =
+                    "❌ Location permission nahi mili";
+            }
+
+            alert(
+                "Location permission allow karo, phir dobara try karo."
+            );
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        }
+    );
+}
 
 // ===============================
 // SUBMIT BUY NOW ORDER
