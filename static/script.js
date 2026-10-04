@@ -568,3 +568,73 @@ document.addEventListener(
         updateCartCount();
     }
 );
+// ===============================
+// SEARCH PRODUCTS
+// ===============================
+
+function searchProducts() {
+
+    const searchInput =
+        document.getElementById("productSearch");
+
+    if (!searchInput) return;
+
+    const searchText =
+        searchInput.value.toLowerCase().trim();
+
+    const productCards =
+        document.querySelectorAll(".product-card");
+
+    productCards.forEach(function(card) {
+
+        const productText =
+            card.innerText.toLowerCase();
+
+        if (productText.includes(searchText)) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+}
+
+
+// ===============================
+// FILTER PRODUCTS
+// ===============================
+
+function filterProducts(category) {
+
+    const productCards =
+        document.querySelectorAll(".product-card");
+
+    productCards.forEach(function(card) {
+
+        if (category === "all") {
+
+            card.style.display = "";
+
+            return;
+        }
+
+        const categoryText =
+            card.innerText.toLowerCase();
+
+        if (
+            categoryText.includes(
+                category.toLowerCase()
+            )
+        ) {
+
+            card.style.display = "";
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
