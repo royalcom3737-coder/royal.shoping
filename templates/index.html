@@ -227,7 +227,19 @@
                     id="customerAddress"
                     placeholder="Full address & Pincode"
                     required></textarea>
+<button
+    type="button"
+    class="location-button"
+    onclick="getCustomerLocation()">
+    📍 Use My Current Location
+</button>
 
+<p id="locationStatus" class="location-status">
+    Location share karne ke liye button dabayein
+</p>
+
+<input type="hidden" id="customerLatitude">
+<input type="hidden" id="customerLongitude">
                 <label>Payment Method:</label>
 
                 <div class="payment-box">
