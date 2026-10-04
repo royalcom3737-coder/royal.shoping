@@ -80,7 +80,9 @@
 
         {% for product in products %}
 
-        <div class="product-card">
+        <div
+class="product-card"
+    onclick="openProduct('{{ product.id }}')">
 
             <!-- PRODUCT IMAGE -->
             <div class="product-image">
