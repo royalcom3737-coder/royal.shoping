@@ -23,16 +23,47 @@
         <span>✓ 100% Original Products</span>
     </div>
 
-    <!-- HEADER -->
-    <header>
-        <div class="logo">
-            👑 ROYAL.SHOPING
-        </div>
+  <!-- HEADER -->
+<header>
 
-        <button class="cart-button" onclick="openCart()">
-            🛒 Cart (<span id="cartCount">0</span>)
+    <div class="logo">
+        👑 ROYAL.SHOPING
+    </div>
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="productSearch"
+            placeholder="🔎 Search watches, perfumes..."
+            oninput="searchProducts()">
+
+        <button onclick="searchProducts()">
+            Search
         </button>
-    </header>
+    </div>
+
+    <button class="cart-button" onclick="openCart()">
+        🛒 Cart (<span id="cartCount">0</span>)
+    </button>
+
+</header>
+
+<!-- CATEGORY BAR -->
+<nav class="category-bar">
+
+    <button onclick="filterProducts('all')">
+        All
+    </button>
+
+    <button onclick="filterProducts('Watch')">
+        ⌚ Watches
+    </button>
+
+    <button onclick="filterProducts('Perfume')">
+        🌹 Perfumes
+    </button>
+
+</nav>
 
     <!-- HERO -->
     <section class="hero">
