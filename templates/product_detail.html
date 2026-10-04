@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>{{ product.name }} | ROYAL.SHOPING</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header>
+
+        <div class="logo">
+            👑 ROYAL.SHOPING
+        </div>
+
+        <button
+            class="cart-button"
+            onclick="window.location.href='/'">
+
+            🏠 Home
+
+        </button>
+
+    </header>
+
+
+    <!-- PRODUCT DETAIL -->
+
+    <main class="product-detail">
+
+        <div class="product-detail-image">
+
+            <img
+                src="{{ url_for('static', filename=product.image) }}"
+                alt="{{ product.name }}">
+
+        </div>
+
+
+        <div class="product-detail-info">
+
+            <small>
+                {{ product.category }}
+            </small>
+
+            <h1>
+                {{ product.name }}
+            </h1>
+
+            <p class="detail-description">
+                {{ product.description }}
+            </p>
+
+            <div class="detail-price">
+                ₹{{ "{:,.0f}".format(product.price) }}
+            </div>
+
+
+            {% if product.stock|default(0)|int > 0 %}
+
+                <div class="stock-status in-stock">
+                    🟢 In Stock
+                </div>
+
+                <button
+                    class="buy-button"
+                    onclick="buyNow(
+                        '{{ product.name }}',
+                        {{ product.price }}
+                    )">
+
+                    Buy Now
+
+                </button>
+
+
+                <button
+                    class="cart-add"
+                    onclick="addToCart(
+                        '{{ product.name }}',
+                        {{ product.price }}
+                    )">
+
+                    🛒 Add to Cart
+
+                </button>
+
+            {% else %}
+
+                <div class="stock-status out-of-stock">
+                    🔴 Out of Stock
+                </div>
+
+                <button
+                    class="buy-button"
+                    disabled>
+
+                    Out of Stock
+
+                </button>
+
+            {% endif %}
+
+        </div>
+
+    </main>
+
+
+    <!-- ORDER MODAL -->
+
+    <div id="orderModal" class="modal">
+
+        <div class="modal-content">
+
+            <button
+                class="close-button"
+                onclick="closeOrder()">
+
+                ×
+
+            </button>
+
+            <h2>
+                📦 Complete Your Order
+            </h2>
+
+            <form
+                onsubmit="submitOrder(event)">
+
+                <label>Full Name:</label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Aapka naam"
+                    required>
+
+
+                <label>Mobile Number:</label>
+
+                <input
+                    type="tel"
+                    id="customerMobile"
+                    placeholder="10-digit mobile"
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    required>
+
+
+                <label>Delivery Address:</label>
+
+                <textarea
+                    id="customerAddress"
+                    placeholder="Full address & Pincode"
+                    required></textarea>
+
+
+                <button
+                    type="button"
+                    class="location-button"
+                    onclick="getCustomerLocation()">
+
+                    📍 Use My Current Location
+
+                </button>
+
+
+                <p
+                    id="locationStatus"
+                    class="location-status">
+
+                    Location share karne ke liye button dabayein
+
+                </p>
+
+
+                <input
+                    type="hidden"
+                    id="customerLatitude">
+
+                <input
+                    type="hidden"
+                    id="customerLongitude">
+
+
+                <div class="order-summary">
+
+                    <strong>Product:</strong>
+
+                    <span id="orderProduct">
+                        -
+                    </span>
+
+                    <br>
+
+                    <strong>Total:</strong>
+
+                    <span id="orderPrice">
+                        ₹0
+                    </span>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="confirm-button">
+
+                    Confirm Order on WhatsApp
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script
+        src="{{ url_for('static', filename='script.js') }}">
+    </script>
+
+</body>
+
+</html>
