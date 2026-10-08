@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ROYAL.SHOPING | Premium Watches & Perfumes</title>
+    <title>ROYAL.SHOPING | Premium Watches, Perfumes & Sunglasses</title>
 
     <meta name="description"
-          content="Shop premium watches and perfumes online at ROYAL.SHOPING. Cash on Delivery available.">
+          content="Shop premium watches, perfumes and sunglasses online at ROYAL.SHOPING. Cash on Delivery available.">
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
@@ -23,220 +23,302 @@
         <span>✓ 100% Original Products</span>
     </div>
 
-  <!-- HEADER -->
-<header>
 
-    <div class="logo">
-        👑 ROYAL.SHOPING
-    </div>
+    <!-- HEADER -->
+    <header>
 
-    <div class="search-box">
-        <input
-            type="text"
-            id="productSearch"
-            placeholder="🔎 Search watches, perfumes..."
-            oninput="searchProducts()">
+        <div class="logo">
+            👑 ROYAL.SHOPING
+        </div>
 
-        <button onclick="searchProducts()">
-            Search
+        <!-- SEARCH -->
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="productSearch"
+                placeholder="🔎 Search watches, perfumes, sunglasses..."
+                oninput="searchProducts()">
+
+            <button onclick="searchProducts()">
+                Search
+            </button>
+
+        </div>
+
+
+        <!-- CART -->
+        <button class="cart-button" onclick="openCart()">
+            🛒 Cart (<span id="cartCount">0</span>)
         </button>
-    </div>
 
-    <button class="cart-button" onclick="openCart()">
-        🛒 Cart (<span id="cartCount">0</span>)
-    </button>
+    </header>
 
-</header>
 
-<!-- CATEGORY BAR -->
-<nav class="category-bar">
+    <!-- CATEGORY BAR -->
+    <nav class="category-bar">
 
-    <button onclick="filterProducts('all')">
-        All
-    </button>
+        <button onclick="filterProducts('all')">
+            🛍️ All
+        </button>
 
-    <button onclick="filterProducts('Watch')">
-        ⌚ Watches
-    </button>
+        <button onclick="filterProducts('Watch')">
+            ⌚ Watches
+        </button>
 
-    <button onclick="filterProducts('Perfume')">
-        🌹 Perfumes
-    </button>
+        <button onclick="filterProducts('Perfume')">
+            🌹 Perfumes
+        </button>
 
-</nav>
+        <button onclick="filterProducts('Sunglasses')">
+            🕶️ Sunglasses
+        </button>
+
+    </nav>
+
 
     <!-- HERO -->
     <section class="hero">
+
         <h1>Kondhwa, Pune's Trusted Store</h1>
-        <p>Best Quality Perfumes & Watches | COD Available</p>
+
+        <p>
+            Best Quality Watches, Perfumes & Sunglasses | COD Available
+        </p>
+
     </section>
 
-<!-- PRODUCTS -->
-<section class="products-section">
 
-    <h2>Trending Products</h2>
+    <!-- PRODUCTS -->
+    <section class="products-section">
 
-    <div class="products">
+        <h2>Trending Products</h2>
 
-        {% for product in products %}
+        <div class="products">
 
-        <div
-class="product-card"
-    onclick="openProduct('{{ product.id }}')">
+            {% for product in products %}
 
-            <!-- PRODUCT IMAGE -->
-            <div class="product-image">
+            <div
+                class="product-card"
+                onclick="openProduct('{{ product.id }}')">
 
-                <img
-                    src="{{ url_for('static', filename=product.image) }}"
-                    alt="{{ product.name }}"
-                >
+                <!-- PRODUCT IMAGE -->
+                <div class="product-image">
 
-            </div>
+                    <img
+                        src="{{ url_for('static', filename=product.image) }}"
+                        alt="{{ product.name }}">
 
-
-            <!-- PRODUCT INFO -->
-            <div class="product-info">
-
-                <small>
-                    {{ product.category }}
-                </small>
-
-                <h3>
-                    {{ product.name }}
-                </h3>
-
-                <p>
-                    {{ product.description }}
-                </p>
-
-
-                <!-- PRICE -->
-                <div class="price">
-                    ₹{{ "{:,.0f}".format(product.price) }}
                 </div>
 
 
-                <!-- STOCK STATUS -->
-                {% if product.stock|default(0)|int > 0 %}
+                <!-- PRODUCT INFO -->
+                <div class="product-info">
 
-                    <div class="stock-status in-stock">
-                        🟢 In Stock
+                    <small>
+                        {{ product.category }}
+                    </small>
+
+                    <h3>
+                        {{ product.name }}
+                    </h3>
+
+                    <p>
+                        {{ product.description }}
+                    </p>
+
+
+                    <!-- PRICE -->
+                    <div class="price">
+                        ₹{{ "{:,.0f}".format(product.price) }}
                     </div>
 
-                    <button
-                        class="buy-button"
-                        onclick="buyNow(
-                            '{{ product.name }}',
-                            {{ product.price }}
-                        )">
-                        Buy Now
-                    </button>
 
-                    <button
-                        class="cart-add"
-                        onclick="addToCart(
-                            '{{ product.name }}',
-                            {{ product.price }}
-                        )">
-                        Add to Cart
-                    </button>
+                    <!-- STOCK -->
+                    {% if product.stock|default(0)|int > 0 %}
 
-                {% else %}
+                        <div class="stock-status in-stock">
+                            🟢 In Stock
+                        </div>
 
-                    <div class="stock-status out-of-stock">
-                        🔴 Out of Stock
-                    </div>
 
-                    <button
-                        class="buy-button"
-                        disabled>
-                        Out of Stock
-                    </button>
+                        <!-- BUY NOW -->
+                        <button
+                            class="buy-button"
+                            onclick="event.stopPropagation(); buyNow(
+                                '{{ product.name }}',
+                                {{ product.price }}
+                            )">
 
-                {% endif %}
+                            Buy Now
+
+                        </button>
+
+
+                        <!-- ADD TO CART -->
+                        <button
+                            class="cart-add"
+                            onclick="event.stopPropagation(); addToCart(
+                                '{{ product.name }}',
+                                {{ product.price }}
+                            )">
+
+                            Add to Cart
+
+                        </button>
+
+
+                    {% else %}
+
+                        <div class="stock-status out-of-stock">
+                            🔴 Out of Stock
+                        </div>
+
+                        <button
+                            class="buy-button"
+                            disabled>
+
+                            Out of Stock
+
+                        </button>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- TRUST SECTION -->
+    <section class="trust-section">
+
+        <div class="trust-grid">
+
+            <div class="trust-box">
+
+                <div class="trust-icon">
+                    🚚
+                </div>
+
+                <h3>
+                    Free Shipping
+                </h3>
+
+                <p>
+                    Free delivery all over India
+                </p>
+
+            </div>
+
+
+            <div class="trust-box">
+
+                <div class="trust-icon">
+                    💵
+                </div>
+
+                <h3>
+                    Cash On Delivery
+                </h3>
+
+                <p>
+                    Pay when your order arrives
+                </p>
+
+            </div>
+
+
+            <div class="trust-box">
+
+                <div class="trust-icon">
+                    ✓
+                </div>
+
+                <h3>
+                    100% Original
+                </h3>
+
+                <p>
+                    Quality products you can trust
+                </p>
 
             </div>
 
         </div>
 
-        {% endfor %}
+    </section>
 
-    </div>
 
-</section>
+    <!-- SHOP LOCATION -->
+    <section class="location-section">
 
-       <!-- TRUST SECTION -->
-<section class="trust-section">
+        <div class="location-box">
 
-    <div class="trust-grid">
+            <h2>
+                📍 Visit Our Store
+            </h2>
 
-        <div class="trust-box">
-            <div class="trust-icon">🚚</div>
-            <h3>Free Shipping</h3>
-            <p>Free delivery all over India</p>
+            <p>
+                Royal Service, Bhagyoday Nagar,<br>
+                Near Mohammadiya Masjid,<br>
+                Kondhwa Khurd, Pune 411048
+            </p>
+
+            <p>
+                🛍️ ROYAL.SHOPING<br>
+                Your trusted local store in Kondhwa, Pune
+            </p>
+
         </div>
 
-        <div class="trust-box">
-            <div class="trust-icon">💵</div>
-            <h3>Cash On Delivery</h3>
-            <p>Pay when your order arrives</p>
-        </div>
+    </section>
 
-        <div class="trust-box">
-            <div class="trust-icon">✓</div>
-            <h3>100% Original</h3>
-            <p>Quality products you can trust</p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- SHOP LOCATION -->
-<section class="location-section">
-
-    <div class="location-box">
-
-        <h2>📍 Visit Our Store</h2>
-
-        <p>
-            Royal Service, Bhagyoday Nagar,<br>
-            Near Mohammadiya Masjid,<br>
-            Kondhwa Khurd, Pune 411048
-        </p>
-
-        <p>
-            🛍️ ROYAL.SHOPING<br>
-            Your trusted local store in Kondhwa, Pune
-        </p>
-
-    </div>
-
-</section>
 
     <!-- ORDER MODAL -->
     <div id="orderModal" class="modal">
 
         <div class="modal-content">
 
-            <button class="close-button" onclick="closeOrder()">
+            <button
+                class="close-button"
+                onclick="closeOrder()">
+
                 ×
+
             </button>
 
-            <h2>📦 Complete Your Order</h2>
 
-            <form id="orderForm" onsubmit="submitOrder(event)">
+            <h2>
+                📦 Complete Your Order
+            </h2>
 
-                <label>Full Name:</label>
+
+            <form
+                id="orderForm"
+                onsubmit="submitOrder(event)">
+
+
+                <label>
+                    Full Name:
+                </label>
+
                 <input
                     type="text"
                     id="customerName"
                     placeholder="Aapka naam"
                     required>
 
-                <label>Mobile Number:</label>
+
+                <label>
+                    Mobile Number:
+                </label>
+
                 <input
                     type="tel"
                     id="customerMobile"
@@ -245,47 +327,96 @@ class="product-card"
                     maxlength="10"
                     required>
 
-                <label>Delivery Address:</label>
+
+                <label>
+                    Delivery Address:
+                </label>
+
                 <textarea
                     id="customerAddress"
                     placeholder="Full address & Pincode"
                     required></textarea>
-<button
-    type="button"
-    class="location-button"
-    onclick="getCustomerLocation()">
-    📍 Use My Current Location
-</button>
 
-<p id="locationStatus" class="location-status">
-    Location share karne ke liye button dabayein
-</p>
 
-<input type="hidden" id="customerLatitude">
-<input type="hidden" id="customerLongitude">
-                <label>Payment Method:</label>
+                <!-- LOCATION -->
+                <button
+                    type="button"
+                    class="location-button"
+                    onclick="getCustomerLocation()">
+
+                    📍 Use My Current Location
+
+                </button>
+
+
+                <p
+                    id="locationStatus"
+                    class="location-status">
+
+                    Location share karne ke liye button dabayein
+
+                </p>
+
+
+                <input
+                    type="hidden"
+                    id="customerLatitude">
+
+                <input
+                    type="hidden"
+                    id="customerLongitude">
+
+
+                <!-- PAYMENT -->
+                <label>
+                    Payment Method:
+                </label>
 
                 <div class="payment-box">
+
                     <input
                         type="radio"
                         checked
                         disabled>
 
-                    <span>Cash on Delivery (COD)</span>
+                    <span>
+                        Cash on Delivery (COD)
+                    </span>
+
                 </div>
 
+
+                <!-- ORDER SUMMARY -->
                 <div class="order-summary">
-                    <strong>Product:</strong>
-                    <span id="orderProduct">-</span>
+
+                    <strong>
+                        Product:
+                    </strong>
+
+                    <span id="orderProduct">
+                        -
+                    </span>
+
                     <br>
-                    <strong>Total:</strong>
-                    <span id="orderPrice">₹0</span>
+
+                    <strong>
+                        Total:
+                    </strong>
+
+                    <span id="orderPrice">
+                        ₹0
+                    </span>
+
                 </div>
 
+
+                <!-- CONFIRM ORDER -->
                 <button
                     type="submit"
                     class="confirm-button">
+
                     Confirm Order on WhatsApp
+
                 </button>
 
             </form>
@@ -300,22 +431,36 @@ class="product-card"
 
         <div class="modal-content">
 
-            <button class="close-button" onclick="closeCart()">
+            <button
+                class="close-button"
+                onclick="closeCart()">
+
                 ×
+
             </button>
 
-            <h2>🛒 Your Cart</h2>
+
+            <h2>
+                🛒 Your Cart
+            </h2>
+
 
             <div id="cartItems"></div>
 
+
             <div class="cart-total">
+
                 Total: ₹<span id="cartTotal">0</span>
+
             </div>
+
 
             <button
                 class="confirm-button"
                 onclick="checkoutCart()">
+
                 Order Cart on WhatsApp
+
             </button>
 
         </div>
@@ -325,6 +470,7 @@ class="product-card"
 
     <!-- FOOTER -->
     <footer>
+
         <p>
             © 2026 ROYAL.SHOPING | Kondhwa, Pune
         </p>
@@ -334,11 +480,15 @@ class="product-card"
             Near Mohammadiya Masjid,
             Kondhwa Khurd, Pune 411048
         </p>
+
     </footer>
 
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <!-- JAVASCRIPT -->
+    <script
+        src="{{ url_for('static', filename='script.js') }}">
+    </script>
 
 </body>
 </html>
-
+```
